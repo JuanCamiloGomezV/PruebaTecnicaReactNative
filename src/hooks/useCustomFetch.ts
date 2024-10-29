@@ -66,6 +66,10 @@ const useCustomFetch = <T = unknown>() => {
     [],
   );
 
+  const modifyData = (data: T) => {
+    dispatch({type: 'FETCH_SUCCESS', payload: data});
+  };
+
   return {
     ...state,
     get: (url: string, params?: Record<string, any>) =>
@@ -73,6 +77,7 @@ const useCustomFetch = <T = unknown>() => {
     post: (url: string, body?: any) => request({method: 'POST', url, body}),
     put: (url: string, body?: any) => request({method: 'PUT', url, body}),
     del: (url: string) => request({method: 'DELETE', url}),
+    modifyData,
   };
 };
 

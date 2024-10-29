@@ -9,6 +9,7 @@ const usePostsController = () => {
     data: posts,
     loading: loadingGet,
     error: errorGet,
+    modifyData: modifyPosts,
   } = useCustomFetch<Post[]>();
   const {
     post,
@@ -44,12 +45,19 @@ const usePostsController = () => {
   }, []);
 
   useEffect(() => {
-    if (newPost) Alert.alert('Publicacion creada', JSON.stringify(newPost));
+    if (newPost && posts) {
+      modifyPosts([newPost, ...posts]);
+    }
   }, [newPost]);
 
   useEffect(() => {
-    if (postEdited)
-      Alert.alert('Publicacion editada', JSON.stringify(postEdited));
+    if (postEdited && posts) {
+      const newPosts = posts.map(item =>
+        item.id === postEdited.id ? postEdited : item,
+      );
+
+      modifyPosts(newPosts);
+    }
   }, [postEdited]);
 
   const getPosts = async () => {
@@ -62,7 +70,11 @@ const usePostsController = () => {
 
   const deletePost = async (id: number) => {
     await del(urlPosts + `/${id}`);
-    Alert.alert('Publicacion eliminada');
+
+    if (posts) {
+      const newPosts = posts?.filter(item => item.id !== id);
+      modifyPosts(newPosts);
+    }
   };
 
   const putPost = async () => {
