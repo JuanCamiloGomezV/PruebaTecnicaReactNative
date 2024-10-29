@@ -49,6 +49,7 @@ const CreateEditPost = ({
             name="name"
             uniqueKey="id"
             onPressItem={item => onChangeUser(item.id)}
+            onPressIn={() => console.log('eee')}
           />
         </View>
         <View style={styles.row}>

@@ -21,7 +21,10 @@ const Dropdown = <T extends Record<string, any>>({
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <View style={{flex: 1}}>
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={{flex: 1}}
+      onPress={() => setShowDropdown(prev => !prev)}>
       <TextInputOutlined
         {...textInputProps}
         right={
@@ -51,7 +54,7 @@ const Dropdown = <T extends Record<string, any>>({
           />
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 
